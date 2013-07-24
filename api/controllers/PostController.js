@@ -28,6 +28,8 @@ module.exports = {
 
     if (limit) {
       def.limit(parseInt(limit));
+    } else {
+      def.limit(20);
     }
 
     if (search) {
