@@ -12,7 +12,8 @@
         "passport": "*",
         "passport-google": "*",
         "passport-local": "*",
-        "bcrypt": "*"
+        "bcrypt": "*",
+        "async": "*"
     },
     "scripts": {
         "start": "node app.js",
