@@ -94,6 +94,14 @@ module.exports.policies = {
 
   AdminController: {
     index: [passport.initialize(), passport.session(), 'adminAuthenticated']
+  },
+
+  TopicController: {
+    "*": [passport.initialize(), passport.session(), 'authenticated']
+  },
+
+  HomeController: {
+    "*": [passport.initialize(), passport.session(), 'authenticated']
   }
 
   /*
