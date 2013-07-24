@@ -5,6 +5,27 @@
  * @description	:: Contains logic for handling requests.
  */
 
+var async = require('async');
+
+function fillTopicsWithUserAndTopic(topics, callback) {
+  if (topics instanceof Array) {
+    async.map(topics, function(topic, result) {
+      User.findOneById(topic.user).done(function(err, results) {
+        topic.user = results;
+        result(err, topic);
+      });
+    }, function(err, topics) {
+      callback(topics);
+    });
+  } else {
+    var topic = topics;
+    User.findOneById(topic.user).done(function(err, results) {
+      topic.user = results;
+      callback(topic);
+    });
+  }
+}
+
 module.exports = {
 
   /* e.g.
@@ -40,7 +61,9 @@ module.exports = {
     }
 
     def.exec(function(err, topics) {
-      res.json(topics);
+      fillTopicsWithUserAndTopic(topics, function(fullTopic) {
+        res.json(fullTopic);
+      });
     });
 
   },
@@ -54,7 +77,9 @@ module.exports = {
         }, 500);
       } else {
         if (topic) {
-          res.json(topic);
+          fillTopicsWithUserAndTopic(topic, function(fullTopic) {
+            res.json(fullTopic);
+          });
         } else {
           res.json({code: 500, description: 'Topic not found'}, 500);
         }
@@ -72,7 +97,9 @@ module.exports = {
             description: err
           }, 500);
         } else {
-          return res.json(topics)
+          fillTopicsWithUserAndTopic(topics, function(fullTopic) {
+            res.json(fullTopic);
+          });
         }
       });
   },
