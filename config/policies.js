@@ -90,7 +90,11 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': [passport.initialize(), passport.session()]
+  '*': [passport.initialize(), passport.session()],
+
+  AdminController: {
+    index: [passport.initialize(), passport.session(), 'adminAuthenticated']
+  }
 
   /*
 	// Here's an example of adding some policies to a controller

@@ -37,8 +37,11 @@ module.exports.routes = {
 
   '/': 'HomeController.index',
 
-  '/user/updatePassword/:id': 'UserController.updatePassword'
+  'post /user/updatePassword/:id': 'UserController.updatePassword',
 
+  //admin
+//  '/admin': {'view': 'admin/index'},
+//  '/admin/index': {'view': 'admin/index'}
 
   /*
   // But what if you want your home page to display
