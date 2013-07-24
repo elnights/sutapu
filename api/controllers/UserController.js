@@ -5,6 +5,18 @@
  * @description	:: Contains logic for handling requests.
  */
 
+function pickValidationMessages(err) {
+  var result = [];
+  if (err.email || err.displayName) {
+    for (var field in err) {
+      for (var rule in err[field]) {
+        result.push(field + ': ' + err[field][rule].message);
+      }
+    }
+  }
+  return result.join(';');
+}
+
 module.exports = {
 
   /* e.g.
@@ -63,20 +75,18 @@ module.exports = {
         bio: req.param('bio')
       }).done(function(err, user) {
         // Error handling
-        var errMessage = [];
+        var errMessage;
         if (err) {
           //check for validation errors
-          if (err.email) {
-            for (var rule in err.email) {
-              errMessage.push(err.email[rule].message);
-            }
+          if (errMessage = pickValidationMessages(err)) {
+            err = errMessage;
           }
-          errMessage = errMessage.join(';');
 
           res.json({
             code: '500',
-            description: errMessage
+            description: err
           }, 500);
+
           // The User was created successfully!
         } else {
           res.json(user, 201);
@@ -87,14 +97,18 @@ module.exports = {
   },
 
   update: function(req, res) {
-    var paramId = req.param('id');
-    if (!req.user || paramId !== req.user.id) {
+    function returnPermissionDenied() {
       return res.json({
         code: '500',
         description: 'Permission denied'
       }, 403);
     }
-    User.find({
+
+    var paramId = req.param('id');
+    if ((!req.user || paramId != req.user.id)) {
+      return returnPermissionDenied();
+    }
+    User.findOne({
       id: paramId
     }).done(function(err, user) {
       if (!user) {
@@ -103,13 +117,25 @@ module.exports = {
           description: 'User not found'
         }, 500);
       }
+
       //saving user model
       user.displayName = req.param('displayName');
       user.avatar = req.param('avatar');
       user.bio = req.param('bio');
+      user.level = parseInt(req.param('level'));
 
       // save the updated value
       user.save(function(err) {
+        if (err) {
+          var errMessage;
+          if (errMessage = pickValidationMessages(err)) {
+            err = errMessage;
+          }
+          return res.json({
+            code: '500',
+            description: err
+          }, 500);
+        }
         res.json({
           result: 'ok'
         });
