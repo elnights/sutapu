@@ -104,6 +104,54 @@ module.exports = {
       }
       res.json({result: 'ok'});
     });
+  },
+
+  addtopic: function(req, res) {
+    var topic = req.param('topic');
+    if (!topic) {
+      return res.json({
+        code: '500',
+        description: 'No topic given'
+      }, 500);
+    }
+    Subscription.findOne({
+      user: req.user.id,
+      id: req.param('id')
+    }, function(err, sub) {
+      if (sub) {
+        SubscriptionTopics.findOne({subscription: sub.id, topic: topic}).done(function(err, subscriptionTopic) {
+          if (subscriptionTopic) {
+            return res.json({
+              code: '500',
+              description: 'Already added'
+            }, 500);
+          } else {
+            Topic.findOneById(topic).done(function(err, topicObject) {
+              if (!topicObject) {
+                return res.json({
+                  code: '500',
+                  description: 'Topic does not exists'
+                }, 500);
+              } else {
+                SubscriptionTopics.create({
+                  subscription: sub.id,
+                  topic: topic
+                }).done(function(err, subTopic) {
+                  res.json({
+                    result: 'ok'
+                  });
+                });
+              }
+            });
+          }
+        });
+      } else {
+        return res.json({
+          code: '500',
+          description: 'Subscription not found'
+        }, 500);
+      }
+    });
   }
 
 };

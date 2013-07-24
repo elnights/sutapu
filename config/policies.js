@@ -110,6 +110,10 @@ module.exports.policies = {
     "*": authenticatedPolicies
   },
 
+  SubscriptionController: {
+    "*": authenticatedPolicies
+  },
+
   UserController: {
     "find": authenticatedPolicies,
     "update": authenticatedPolicies,
