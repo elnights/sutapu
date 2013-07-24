@@ -25,14 +25,24 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
   function(username, password, done) {
-    User.findOne({ username: username, password: UserService.createPasswordHash(password)}, function (err, user) {
+    User.findOne({ email: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Login incorrect' });
       }
-      return done(null, user);
+
+      UserService.checkPassword(password, user.password, function(passwordValid) {
+          if (passwordValid) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'Login incorrect' });
+          }
+      });
     });
   }
 ));

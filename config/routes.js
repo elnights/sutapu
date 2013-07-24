@@ -36,7 +36,9 @@ module.exports.routes = {
 //    view: 'home/index'
 //  },
 
-  '/': 'HomeController.index'
+  '/': 'HomeController.index',
+
+  '/user/updatePassword/:id': 'UserController.updatePassword'
 
 
   /*

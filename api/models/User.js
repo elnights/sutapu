@@ -21,6 +21,10 @@ module.exports = {
       email: true,
       required: true
     },
+
+    bio: 'string',
+
+    avatar: 'string',
 //    givenName: 'string',
 //    familyName: 'string',
     password: 'string',
@@ -29,6 +33,13 @@ module.exports = {
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
+      if (!obj.avatar) {
+        Settings.findOne({name: 'defaultAvatar'}).done(function(err, defaultAvatarSetting) {
+          if (defaultAvatarSetting) {
+            obj.avatar = defaultAvatarSetting.value;
+          }
+        });
+      }
       return obj;
     }
   }
