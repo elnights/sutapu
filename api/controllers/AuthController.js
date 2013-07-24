@@ -21,7 +21,7 @@ var AuthController = {
           return;
         }
 
-        res.redirect('/');
+        res.json(user);
       });
     })(req, res);
   },
