@@ -13,8 +13,32 @@ module.exports = {
   }
   */
   index: function(req, res) {
-    res.send('dummy');
-    //Topic.find()
+    var def = Topic.find(),
+        offset = req.param('offset'),
+        limit = req.param('limit'),
+        user = req.param('user'),
+        search = req.param('search');
+
+    if (offset) {
+      def.skip(parseInt(offset));
+    }
+
+    if (limit) {
+      def.limit(parseInt(limit));
+    }
+
+    if (search) {
+      def.where({name: {contains: search}});
+    }
+
+    if (user) {
+      def.where({user: user});
+    }
+
+    def.exec(function(err, topics) {
+      res.json(topics);
+    });
+
   },
 
   find: function(req, res) {
@@ -52,6 +76,7 @@ module.exports = {
       user: req.user.id,
       name: req.param('name')
     }, function(err, topics) {
+      var errMessage;
       if (err) {
         if (errMessage = CommonService.pickValidationMessages(err)) {
           err = errMessage;
