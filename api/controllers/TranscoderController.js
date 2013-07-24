@@ -8,7 +8,7 @@
 module.exports = {
 
   create: function(req, res) {
-
+    res.json({result: 'ok'});
   }
   
 
