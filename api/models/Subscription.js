@@ -18,6 +18,12 @@ module.exports = {
     name: {
       type: 'string',
       required: true
+    },
+
+    toJSON: function() {
+      var obj = this.toObject();
+      obj.user = {id: obj.user};
+      return obj;
     }
   }
 
