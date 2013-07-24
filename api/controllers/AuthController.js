@@ -2,7 +2,11 @@ var passport = require('passport');
 
 var AuthController = {
   currentUser: function(req, res) {
-    res.send(req.user);
+    if (!req.user) {
+      res.json({result: 'Not logged in'}, 403);
+    } else {
+      res.json(req.user);
+    }
   },
 
   local: function(req, res) {
