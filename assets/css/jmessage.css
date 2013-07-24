@@ -1,0 +1,58 @@
+#jm_stack_box 
+{
+	position: fixed; top: 35px; right: 15px;
+	width: 220px;
+        z-index: 9999;
+}
+
+#jm_stack_box .jm_message
+{
+	background-color: #000;
+	background: rgba(0, 0, 0, .7);
+	padding: 10px; margin: 0 0 15px 0;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #fff;
+	cursor: pointer;
+
+	border-radius: 3px;
+	-o-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+#jm_stack_box .jm_message h3
+{
+	font-size: 15px; font-weight: normal;
+	padding: 0; margin: 0 0 5px 0;
+}
+
+
+#jm_stack_box .jm_message_error
+{
+	background-color: #c00;
+	background: rgba(125, 0, 0, .5);
+}
+
+#jm_stack_box .jm_message_success
+{
+	background-color: #0c0;
+	background: rgba(0, 125, 0, .5);
+}
+#jm_stack_box .jm_message_load
+{
+        padding: 0;
+        background-color: transparent;
+}
+#jm_stack_box .jm_message_load img
+{
+        width:220px;height:140px;
+        opacity: 0.7;
+        border-radius: 3px;
+	-o-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;        
+}
+
+#jm_stack_box .jm_message_success h3{color:GREEN;}
+

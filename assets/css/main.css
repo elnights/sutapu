@@ -1,0 +1,83 @@
+body{
+  padding: 60px 0;
+  background: #f2f2f2;
+}
+.sidebar-nav {
+  padding: 9px 0;
+}
+.navbar-inner{
+  background: #48B855;
+  border: none;
+}
+.container-fluid {
+  padding: 10px 30px;
+}  
+.navbar .brand{
+  color: #f2f2f2;
+  font-size: 30px;
+  font-weight: bold;
+}
+.login-form{
+  padding: 60px 20px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.for-signup-form{
+  display: none;
+}
+.btn-login, .btn-signup{
+  width: 223px;
+}
+.login-form input{
+  padding: 7px;
+}
+.login-form input:focus{
+  border-color: #48B855;
+}  
+.btn-success{
+  background: #48B855;
+  border-color: #409705;
+}
+.btn-success:not(.active):hover{
+  background: #59AF62;
+  border-color: #3B8806;
+}
+.login-form label.error {
+  color: red;
+  padding: 4px 8px;
+  margin-top: 2px;
+  margin-top: -55px;
+  position: absolute;
+}
+.login-form label.valid, .login-form label.error.valid {
+  display: none;
+  text-indent: -9999px;
+}
+
+@media (max-width: 480px) {
+  body{
+    padding: 0; 
+  }  
+  .login-form {
+    max-width: 200px;
+  }
+  .login-form label.error {
+    color: red;
+    padding: 4px 8px;
+    margin-top: 2px;
+    margin-top: -5px;
+    position: absolute;
+  }
+  .login-form label.valid, .login-form label.error.valid{
+    display: none;
+    text-indent: -9999px;
+  }
+} 
+
+@media (max-width: 979px){
+  body{
+    min-height: 580px;
+    padding: 0; 
+  }
+}
