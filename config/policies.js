@@ -102,6 +102,10 @@ module.exports.policies = {
 
   HomeController: {
     "*": [passport.initialize(), passport.session(), 'authenticated']
+  },
+
+  UserController: {
+    "*": [passport.initialize(), passport.session(), 'authenticated']
   }
 
   /*
