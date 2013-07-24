@@ -5,7 +5,9 @@ var AuthController = {
     if (!req.user) {
       res.json({result: 'Not logged in'}, 403);
     } else {
-      res.json(req.user);
+      User.findOne({id: req.user.id}).done(function(err, user) {
+        res.json(user);
+      });
     }
   },
 
