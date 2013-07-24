@@ -19,6 +19,8 @@ module.exports = {
         user = req.param('user'),
         search = req.param('search');
 
+    def.sort('updatedAt DESC');
+
     if (offset) {
       def.skip(parseInt(offset));
     }
@@ -59,16 +61,18 @@ module.exports = {
   },
 
   mine: function(req, res) {
-    Topic.find({user: req.user.id}, function(err, topics) {
-      if (err) {
-        return res.json({
-          code: '500',
-          description: err
-        }, 500);
-      } else {
-        return res.json(topics)
-      }
-    });
+    Topic.find({user: req.user.id})
+      .sort('updatedAt DESC')
+      .done(function(err, topics) {
+        if (err) {
+          return res.json({
+            code: '500',
+            description: err
+          }, 500);
+        } else {
+          return res.json(topics)
+        }
+      });
   },
 
   create: function(req, res) {

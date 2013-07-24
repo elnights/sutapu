@@ -20,6 +20,8 @@ module.exports = {
       user = req.param('user'),
       search = req.param('search');
 
+    def.sort('updatedAt DESC');
+
     if (offset) {
       def.skip(parseInt(offset));
     }
@@ -46,20 +48,22 @@ module.exports = {
   },
 
   find: function(req, res) {
-    Post.findOne( {id: req.param('id') }, function(err, post) {
-      if (err) {
-        return res.json({
-          code: '500',
-          description: err
-        }, 500);
-      } else {
-        if (post) {
-          res.json(post);
+    Post.findOne( {id: req.param('id') })
+      .sort('updatedAt DESC')
+      .done(function(err, post) {
+        if (err) {
+          return res.json({
+            code: '500',
+            description: err
+          }, 500);
         } else {
-          res.json({code: 500, description: 'Post not found'}, 500);
+          if (post) {
+            res.json(post);
+          } else {
+            res.json({code: 500, description: 'Post not found'}, 500);
+          }
         }
-      }
-    });
+      });
   },
 
   mine: function(req, res) {
