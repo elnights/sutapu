@@ -183,15 +183,15 @@ module.exports = function (grunt) {
         files: [
           {
           expand: true,
-          cwd: 'assets/styles/',
+          cwd: 'assets/css/',
           src: ['*.less'],
-          dest: '.tmp/public/styles/',
+          dest: '.tmp/public/css/',
           ext: '.css'
         }, {
           expand: true,
-          cwd: 'assets/linker/styles/',
+          cwd: 'assets/linker/css/',
           src: ['*.less'],
-          dest: '.tmp/public/linker/styles/',
+          dest: '.tmp/public/linker/css/',
           ext: '.css'
         }
         ]
