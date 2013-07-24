@@ -18,6 +18,16 @@ module.exports = {
     });
   },
 
+  find: function(req, res) {
+    User.findOne({id: req.param('id')}).done(function(err, user) {
+      if (user) {
+        res.json(user);
+      } else {
+        res.json({code: 500, description: 'User not found'}, 500);
+      }
+    });
+  },
+
   create: function(req, res) {
     var result, error;
 
@@ -110,7 +120,10 @@ module.exports = {
       user.displayName = req.param('displayName');
       user.avatar = req.param('avatar');
       user.bio = req.param('bio');
-      user.level = parseInt(req.param('level'));
+      var level = req.param('level');
+      if (level) {
+        user.level = parseInt(level);
+      }
 
       // save the updated value
       user.save(function(err) {
