@@ -119,9 +119,9 @@ module.exports = {
     });
   },
 
-  updatePassword: function(req, res) {
+  updatepassword: function(req, res) {
     var paramId = req.param('id');
-    if (!req.user || paramId !== req.user.id) {
+    if (!req.user || paramId != req.user.id) {
       return res.json({
         code: '500',
         description: 'Permission denied'
@@ -130,14 +130,14 @@ module.exports = {
     User.find({
       id: paramId
     }).done(function(err, user) {
-        if (!user) {
+        if (!user || !user.length) {
           return res.json({
             code: '500',
             description: 'User not found'
           }, 500);
         }
         //saving user model
-
+        user = user[0];
         UserService.checkPassword(req.param('oldPassword'), user.password, function(passwordValid) {
           if (passwordValid) {
             UserService.createPasswordHash(req.param('password'), function(passwordHash) {
