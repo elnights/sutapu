@@ -9,7 +9,7 @@ var AuthController = {
     passport.authenticate('local', function(err, user, info) {
       if ((err) || (!user))
       {
-        res.json({code: 500, description: "loginIncorrect"}, 500);
+        res.json({code: 401, description: "loginIncorrect"}, 500);
         return;
       }
 
