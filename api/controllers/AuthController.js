@@ -50,7 +50,9 @@ var AuthController = {
 
 	logout: function(req, res) {
 		req.logout();
-  	res.redirect('/');
+    res.json({
+      result: 'ok'
+    });
 	}
 
 };
