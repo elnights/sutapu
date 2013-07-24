@@ -18,6 +18,7 @@ function fillPostsWithUserAndTopic(posts, callback) {
         },
         function(callback) {
           Topic.findOneById(post.topic).done(function(err, topic) {
+            topic.user = {id: topic.user};
             callback(null, topic);
           });
         }
