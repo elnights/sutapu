@@ -5,6 +5,59 @@
  * @description	:: Contains logic for handling requests.
  */
 
+var async = require('async');
+
+function fillPostsWithUserAndTopic(posts, callback) {
+  if (posts instanceof Array) {
+    async.map(posts, function(post, result) {
+      async.parallel([
+        function(callback){
+          User.findOneById(post.user).done(function(err, user) {
+            callback(null, user);
+          });
+        },
+        function(callback) {
+          Topic.findOneById(post.topic).done(function(err, topic) {
+            callback(null, topic);
+          });
+        }
+      ],
+        function(err, results){
+          // the results array will equal ['one','two'] even though
+          // the second function had a shorter timeout.
+          post.user = results[0];
+          post.topic = results[1];
+          result(err, post);
+        }
+      );
+    }, function(err, posts) {
+      callback(posts);
+    });
+  } else {
+    var post = posts;
+    async.parallel([
+      function(callback){
+        User.findOneById(post.user).done(function(err, user) {
+          callback(null, user);
+        });
+      },
+      function(callback) {
+        Topic.findOneById(post.topic).done(function(err, topic) {
+          callback(null, topic);
+        });
+      }
+    ],
+      function(err, results){
+        // the results array will equal ['one','two'] even though
+        // the second function had a shorter timeout.
+        post.user = results[0];
+        post.topic = results[1];
+        callback(post);
+      }
+    );
+  }
+}
+
 module.exports = {
 
   /* e.g.
@@ -45,7 +98,9 @@ module.exports = {
     }
 
     def.exec(function(err, posts) {
-      res.json(posts);
+      fillPostsWithUserAndTopic(posts, function(posts) {
+        res.json(posts);
+      });
     });
   },
 
@@ -60,7 +115,9 @@ module.exports = {
           }, 500);
         } else {
           if (post) {
-            res.json(post);
+            fillPostsWithUserAndTopic(post, function(fullPost) {
+              res.json(fullPost);
+            });
           } else {
             res.json({code: 500, description: 'Post not found'}, 500);
           }
@@ -76,7 +133,9 @@ module.exports = {
           description: err
         }, 500);
       } else {
-        return res.json(posts)
+        fillPostsWithUserAndTopic(posts, function(fullPost) {
+          res.json(fullPost);
+        });
       }
     });
   },
