@@ -37,7 +37,7 @@ module.exports.routes = {
 
   '/': 'HomeController.index',
 
-  'post /user/updatePassword/:id': 'UserController.updatePassword',
+  'post /user/updatePassword/:id': 'UserController.updatePassword'
 
   //admin
 //  '/admin': {'view': 'admin/index'},
