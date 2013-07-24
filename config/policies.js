@@ -86,6 +86,8 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+var authenticatedPolicies = [passport.initialize(), passport.session(), 'authenticated'];
+
 module.exports.policies = {
 
   // Default policy for all controllers and actions
@@ -97,15 +99,18 @@ module.exports.policies = {
   },
 
   TopicController: {
-    "*": [passport.initialize(), passport.session(), 'authenticated']
+    "*": authenticatedPolicies
   },
 
   HomeController: {
-    "*": [passport.initialize(), passport.session(), 'authenticated']
+    "*": authenticatedPolicies
   },
 
   UserController: {
-    "*": [passport.initialize(), passport.session(), 'authenticated']
+    "find": authenticatedPolicies,
+    "update": authenticatedPolicies,
+    "index": authenticatedPolicies,
+    "updatePassword": authenticatedPolicies
   }
 
   /*
