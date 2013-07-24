@@ -102,6 +102,10 @@ module.exports.policies = {
     "*": authenticatedPolicies
   },
 
+  PostController: {
+    "*": authenticatedPolicies
+  },
+
   HomeController: {
     "*": authenticatedPolicies
   },
