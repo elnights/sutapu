@@ -50,9 +50,13 @@ var AuthController = {
 
 	logout: function(req, res) {
 		req.logout();
-    res.json({
-      result: 'ok'
-    });
+    if (req.wantsJSON) {
+      res.json({
+        result: 'ok'
+      });
+    } else {
+      res.redirect('/');
+    }
 	}
 
 };
