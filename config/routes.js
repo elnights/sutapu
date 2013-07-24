@@ -36,9 +36,7 @@ module.exports.routes = {
 //    view: 'home/index'
 //  },
 
-  '/login': {
-    view: 'auth/index'
-  }
+  '/': 'HomeController.index'
 
 
   /*
