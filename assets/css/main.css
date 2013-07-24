@@ -17,17 +17,39 @@ body{
   font-size: 30px;
   font-weight: bold;
 }
-.login-form{
+.login-form, .update-form{
   padding: 60px 20px;
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
   margin: 0 auto;
 }
+.update-form{
+  padding: 30px 20px;
+}  
 .for-signup-form{
   display: none;
 }
 .btn-login, .btn-signup{
   width: 223px;
+}
+.btn-update{
+  width: 285px;
+}
+.btn-update.btn-disable, .btn-update.btn-disable:hover, .btn-update.btn-disable:active, .btn-disable.btn-success:not(.active):hover{
+  background: #ccc;
+  border: 1px solid #aaa;
+  color: #999;
+  cursor: default;
+}
+.select-file{
+  background: white;
+  border: 1px solid #CCC;
+  min-height: 30px !important;
+}
+.avatar-big{
+  width: 100px;
+  height: 100px;
+  margin: 0 20px 0 0;
 }
 .login-form input{
   padding: 7px;
@@ -54,6 +76,19 @@ body{
   display: none;
   text-indent: -9999px;
 }
+.navbar .dropdown-toggle{
+  padding: 2px 6px;
+}
+.navbar .nav > li > a{
+  color: #f2f2f2;
+}
+.user-name{
+  padding: 2px 8px;
+}
+.pages{
+  display: none;
+}
+
 
 @media (max-width: 480px) {
   body{
