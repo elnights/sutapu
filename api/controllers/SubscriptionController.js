@@ -32,7 +32,7 @@ function fillSubscriptionsWithTopics(subscriptions, callback) {
       async.map(subscriptionTopics,
         function(subscriptionTopic, returnTopic) {
           Topic.findById(subscriptionTopic.topic).done(function(err, topic) {
-            returnTopic(topic);
+            returnTopic(null, topic);
           })
         },
         function(err, topics) {
@@ -68,7 +68,7 @@ module.exports = {
   },
 
   find: function(req, res) {
-    Subscription.findOne( {id: req.param('id') }, function(err, sub) {
+    Subscription.findOne( {id: req.param('id'), user: req.user.id }, function(err, sub) {
       if (err) {
         return res.json({
           code: '500',
