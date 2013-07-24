@@ -5,18 +5,6 @@
  * @description	:: Contains logic for handling requests.
  */
 
-function pickValidationMessages(err) {
-  var result = [];
-  if (err.email || err.displayName) {
-    for (var field in err) {
-      for (var rule in err[field]) {
-        result.push(field + ': ' + err[field][rule].message);
-      }
-    }
-  }
-  return result.join(';');
-}
-
 module.exports = {
 
   /* e.g.
@@ -78,7 +66,7 @@ module.exports = {
         var errMessage;
         if (err) {
           //check for validation errors
-          if (errMessage = pickValidationMessages(err)) {
+          if (errMessage = CommonService.pickValidationMessages(err)) {
             err = errMessage;
           }
 
@@ -128,7 +116,7 @@ module.exports = {
       user.save(function(err) {
         if (err) {
           var errMessage;
-          if (errMessage = pickValidationMessages(err)) {
+          if (errMessage = CommonService.pickValidationMessages(err)) {
             err = errMessage;
           }
           return res.json({
