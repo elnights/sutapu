@@ -17,13 +17,7 @@ module.exports = {
    * /home/index
    */ 
   index: function (req,res) {
-
-    if (req.isAuthenticated()) {
-      res.view();
-    } else {
-      res.redirect('/login.html');
-    }
-
+    res.view();
   }
 
 };
