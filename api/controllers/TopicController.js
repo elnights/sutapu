@@ -120,7 +120,9 @@ module.exports = {
           description: err
         }, 500);
       }
-      res.json({result: 'ok'});
+      fillTopicsWithUserAndTopic(topics, function(fullTopic) {
+        res.json(fullTopic);
+      });
     });
   },
 
