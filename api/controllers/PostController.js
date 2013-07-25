@@ -36,38 +36,45 @@ module.exports = {
           })
         }
 
-        if (search) {
-          def.where({text: {contains: search}});
-        }
-
-        if (user) {
-          def.where({user: user});
-        }
-
-        if (offset) {
-          def.skip(parseInt(offset));
-        }
-
-        if (limit) {
-          def.limit(parseInt(limit));
-        } else {
-          def.limit(20);
-        }
-
-        def.sort('updatedAt DESC');
-
-        if (topic) {
-          def.where({topic: topic});
-        }
-
-        def.exec(function(err, posts) {
-          CommonService.fillPostsWithUserAndTopic(posts, function(posts) {
-            res.json(posts);
-          });
-        });
+        continueRequest();
 
       });
+    } else {
+      continueRequest()
     }
+
+    function continueRequest() {
+      if (search) {
+        def.where({text: {contains: search}});
+      }
+
+      if (user) {
+        def.where({user: user});
+      }
+
+      if (offset) {
+        def.skip(parseInt(offset));
+      }
+
+      if (limit) {
+        def.limit(parseInt(limit));
+      } else {
+        def.limit(20);
+      }
+
+      def.sort('updatedAt DESC');
+
+      if (topic) {
+        def.where({topic: topic});
+      }
+
+      def.exec(function(err, posts) {
+        CommonService.fillPostsWithUserAndTopic(posts, function(posts) {
+          res.json(posts);
+        });
+      });
+    }
+
   },
 
   find: function(req, res) {
