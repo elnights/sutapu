@@ -37,5 +37,5 @@
 );
 
 $.get('/auth/currentuser', function(data) {
-  console.log(data);
+  
 });

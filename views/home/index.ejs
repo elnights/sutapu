@@ -20,162 +20,241 @@
           </div>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#" data-class="ko_open_profile">My profile</a></li>
-              <li><a href="#about" data-class="ko_open_users_list">Users</a></li>
-              <li><a href="#contact" data-class="ko_open_topics_list">Topics</a></li>
+              <li class="active nav_profile"><a href="#" data-class="ko_open_profile">My profile</a></li>
+              <li class="nav_users"><a href="#users" data-class="ko_open_users_list" class="nav_users">Users</a></li>
+              <li class="nav_topics"><a href="#topics" data-class="ko_open_topics_list">Topics</a></li>
+              <li class="nav_subscriptions"><a href="#subscriptions" data-class="ko_open_subscriptions_list">Subscriptions</a></li>
+              <li class="nav_messages"><a href="#post" data-class="ko_open_post_list">Posts</a></li>
+              
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid pages messages current-page">
+    <div class="container-fluid pages messages active current-page">
       <div class="row-fluid">
         <div class="span8">
           <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-          <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
+            <iframe id="api_frame_image" name="api_frame_image" style="display:none"></iframe>
+            <form class="form-vertical" id="message_form" onSubmit="return false;">
+              <div class="control-group">
+                <label class="control-label" for="message_text">Text</label>
+                <div class="controls">
+                  <textarea class="span4" placeholder="Your message" name="message_text" id="message_text" rows="5"></textarea>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Add image</label>
+                <input type="hidden" name="message_image" id="message_image">
+              </div>
+              <div class="control-group" style="height: 100px; margin-top:60px;">
+                <label class="control-label">Add topics</label>
+                <ul class="can-drop span4">
+                  
+                </ul>
+              </div>
+              <div class="control-group" style="margin-top:20px;">
+                <div class="controls">
+                  <button type="submit" class="btn btn-success btn-update btn-large btn-disable" style="min-width: 383px;">Send message</button>
+                </div>
+              </div>
+            </form>
+            <form style="margin-top: -224px; margin-bottom: 187px;" class="form-vertical load-image" action="" target="api_frame_image" method="POST" enctype="multipart/form-data">
+                <div class="control-group">
+                  <div class="controls">
+                    <input type="file" class="select-image span4" name="image" value="" accept="image/*">
+                  </div>
+                </div>
+            </form>
+            <div class="clear-fix"></div>
+            <ul class="nav nav-list" style="margin: 0; padding: 0">
+              <li class="nav-header"  style="margin: 0; padding: 0">
+                Your messages
+              </li>
+              <li>
+                <ul>
+                  <!-- ko class: ko_messages_items -->
+                  <li style="min-width: 360px;">
+                    <h2>
+                      <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                      <span class="topics-user" data-class="ko_topics_user"></span>
+                      |
+                      <span class="topics-name" data-class="ko_topics_name"></span>
+                    </h2>
+                    <!-- ko class: images -->
+                      <img class="img-polaroid avatar-big hide" data-class="ko_message_image">
+                    <!-- /ko --> 
+                    <p data-class="ko_message_text"></p>
+                    <div class="clear-fix"></div>
+                  </li>
+                  <!-- /ko -->
+                  <li class="clear-fix"></li>
+                </ul>
+              </li>
+            </ul>  
+          </div><!--/.well -->
         </div><!--/span-->
         <div class="span4">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">TAGS</li>
+              <li class="nav-header">Your topics</li>
+              <li class="topics-list">
+                <ul data-class="ko_topics">
+                  <li>
+                    <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                    <span class="topics-user" data-class="ko_topics_user"></span>
+                    |
+                    <span class="topics-name" data-class="ko_topics_name"></span>
+                </ul>
+              </li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/row-->
     </div>  
 
+    <div class="container-fluid pages subscriptions">
+      <div class="row-fluid">
+        <div class="span8">
+          <div class="row-fluid">
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                Your messages
+              </li>
+              <!-- ko class: ko_subscriptions_items -->
+              <li>
+                <h2>
+                  <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                  <span class="topics-user" data-class="ko_topics_user"></span>
+                  <span class="topics-name" data-class="ko_topics_name"></span>
+                </h2>
+                <!-- ko class: images -->
+                  <img class="img-polaroid avatar-big hide" data-class="ko_message_image">
+                <!-- /ko --> 
+                <p data-class="ko_message_text"></p>
+                <div class="clear-fix"></div>
+              </li>
+              <!-- /ko -->
+              <li class="clear-fix"></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span4">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Last topics</li>
+              <li class="topics-list">
+                <ul data-class="ko_last_topics">
+                  <li>
+                    <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                    <span class="topics-user" data-class="ko_topics_user"></span>
+                    |
+                    <span class="topics-name" data-class="ko_topics_name"></span>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+      </div><!--/row-->
+    </div>  
+  
 
     <div class="container-fluid pages topics">
       <div class="row-fluid">
         <div class="span8">
           <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-          <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                <a href="#addTopic" role="button" class="btn btn-success add-topic-btn" data-toggle="modal">Add topic</a>
+                Your messages
+              </li>
+              <li class="topics-list">
+                <ul>
+                  <!-- ko class: ko_topics -->
+                  <li>
+                    <h2>
+                      <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                      <span class="topics-user" data-class="ko_topics_user"></span>
+                      |
+                      <span class="topics-name" data-class="ko_topics_name"></span>
+                    </h2>
+                    <div class="clear-fix"></div>
+                  </li>
+                <!-- /ko -->
+                </ul>
+              </li>  
+              <li class="clear-fix"></li>
+            </ul>
+          </div><!--/.well -->
         </div><!--/span-->
         <div class="span4">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">TAGS</li>
+              <li class="nav-header">My topics</li>
+              <li class="topics-list">
+                <ul data-class="ko_topics">
+                  <li>
+                    <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                    <span class="topics-user" data-class="ko_topics_user"></span>
+                    |
+                    <span class="topics-name" data-class="ko_topics_name"></span>
+                </ul>
+              </li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/row-->
     </div>  
 
-
+  
     <div class="container-fluid pages users">
       <div class="row-fluid">
         <div class="span8">
           <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-          <div class="row-fluid">
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="span4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                Users
+              </li>
+              <li class="users-list">
+                <ul>
+                  <!-- ko class: ko_users -->
+                  <li>
+                    <h2>
+                      <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                      <span class="topics-user" data-class="ko_topics_user"></span>
+                      | ID [
+                      <span class="topics-name" data-class="ko_users_id"></span>]
+                    </h2>
+                    <div class="clear-fix"></div>
+                  </li>
+                <!-- /ko -->
+                </ul>
+              </li>  
+              <li class="clear-fix"></li>
+            </ul>
+          </div><!--/.well -->
         </div><!--/span-->
         <div class="span4">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">TAGS</li>
+              <li class="nav-header">Last topics</li>
+              <li class="topics-list">
+                <ul data-class="ko_last_topics">
+                  <li>
+                    <img class="img-polaroid avatar-small" data-class="ko_topics_avatar">
+                    <span class="topics-user" data-class="ko_topics_user"></span>
+                    |
+                    <span class="topics-name" data-class="ko_topics_name"></span>
+                </ul>
+              </li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/row-->
     </div>
 
-    <div class="container-fluid pages settings" style="display: block;">
+    <div class="container-fluid pages settings">
       <div class="for-update-form update-form">
         <h1><img src="" class="img-polaroid avatar-big" data-class="ko_settings_avatar"><span data-class="ko_user_name"></span></h1>
         <form class="form-vertical" id="update_form" onSubmit="return false;">
@@ -202,7 +281,7 @@
           </div>
         </form>
         <iframe id="api_frame_avatar" name="api_frame_avatar" style="display:none"></iframe>
-        <form style="margin-top: -110px;" class="form-vertical load-avatar" action="/transcoder/create" target="api_frame_avatar" method="POST" enctype="multipart/form-data">
+        <form style="margin-top: -110px;" class="form-vertical load-avatar" action=" http://172.24.206.6:3000/img" target="api_frame_avatar" method="POST" enctype="multipart/form-data">
           <div class="control-group">
             <div class="controls">
               <input type="file" class="select-file input-xlarge" name="image" value="" accept="image/*">
@@ -263,3 +342,23 @@
 
      
     </div>
+<div class="modal hide" id="addTopic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Add new topic</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-vertical" onSubmit="return false;">
+    <div class="control-group">
+      <label class="control-label" for="topicName">Name</label>
+      <div class="controls">
+        <input class="input-xlarge" type="text" placeholder="Name" name="topicName" id="topicName">
+      </div>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" data-class="ko_add_topic">Create topic</button>
+  </div>
+</div>

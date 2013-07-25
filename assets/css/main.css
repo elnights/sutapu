@@ -35,7 +35,14 @@ body{
 .btn-update{
   width: 285px;
 }
-.btn-update.btn-disable, .btn-update.btn-disable:hover, .btn-update.btn-disable:active, .btn-disable.btn-success:not(.active):hover{
+btn-message{
+   width: 285px;
+}
+.can-drop{
+  border: 1px solid #ccc;
+} 
+.btn-update.btn-disable, .btn-update.btn-disable:hover, .btn-update.btn-disable:active,
+.btn-disable.btn-success:not(.active):hover, .btn-message.btn-disable:hover, .btn-message.btn-disable:active,{
   background: #ccc;
   border: 1px solid #aaa;
   color: #999;
@@ -50,6 +57,11 @@ body{
   width: 100px;
   height: 100px;
   margin: 0 20px 0 0;
+}
+.avatar-small{
+  width: 24px;
+  height: 24px;
+  margin: 0 10px 0 0;
 }
 .login-form input{
   padding: 7px;
@@ -87,6 +99,171 @@ body{
 }
 .pages{
   display: none;
+}
+.topics-list, .users-list{
+  width: 100%;
+  height: auto; 
+  min-height: 600px;
+  border-top: 1px solid #CCC;
+  padding: 20px 0;
+  overflow: hidden;
+}
+.topics-list ul, .users-list ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.topics-list ul li{
+  border: 1px solid #CCC;
+  background: #fff;
+  font: normal 16px/32px Arial;
+  color: #555;
+  width: auto;
+  float:left;
+  padding: 4px 8px;
+  margin: 5px 10px 10px 5px;
+  max-width: 92%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+}
+.topics-list ul li h2 .topics-user{
+  color: #117A98;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.topics-list ul li .topics-user:hover{
+  text-decoration: underline;
+}
+.topics-user:hover{
+  text-decoration: underline;
+}
+.topics-list ul li .topics-name{
+  margin: 0 10px;
+  cursor: pointer;
+  font: bold 16px/40px Arial;
+}
+.nav-list .nav-header .add-topic-btn{
+  float: right;
+  margin: -6px 0 0;
+  padding: 0px 7px;
+  cursor: pointer;
+}
+.clear-fix{
+  overflow: hidden !important;
+  clear: both !important;
+  height: 0 !important;
+  width: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0px !important;
+}
+.messages :not(.well) > .nav.nav-list ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;  
+}  
+.messages :not(.well) > .nav.nav-list li:not(.nav-header){
+  width: 100%;
+  max-width: 350px;
+  float: left;
+  text-align: justify;   
+  margin: 0 0 10px;
+  padding: 0 20px;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) {
+  color: #117A98;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0;  
+  padding: 0;
+  margin-right: 20px;
+}
+.messages :not(.well) > .nav.nav-list > li:not(.nav-header){
+  width: 100%;
+  max-width: 1200px;  
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) .topics-user:hover {
+  text-decoration: underline;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) p,
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) p:hover{
+  text-indent: 10px;
+  color: #555;
+  text-decoration: none;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) h
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) .topics-name{
+  margin: 0 10px;
+  cursor: pointer;
+  margin: 0 10px;
+  font: bold 16px/40px Arial;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) ul li{
+  border: 1px solid #CCC;
+  background: #fff;
+  font: normal 16px/32px Arial;
+  color: #555;
+  width: auto;
+  float:left;
+  padding: 4px 8px;
+  margin: 5px 10px 10px 5px;
+  max-width: 92%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) ul li h2 .topics-user{
+  color: #117A98;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header)  ul li .topics-user:hover{
+  text-decoration: underline;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header) .topics-user{
+  color: #117A98;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.topics-user:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.messages :not(.well) > .nav.nav-list li:not(.nav-header)  ul li .topics-name{
+  margin: 0 10px;
+  cursor: pointer;
+  font: bold 16px/40px Arial;
+  overflow: hidden;
+  display: inline-block;
+  width: 40%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+}
+.messages .select-image{
+  background: white;
+  border: 1px solid #CCC;
+  min-height: 30px !important;  
+}
+.messages .can-drop{
+  margin: 0;
+  height: 80px;
 }
 
 
