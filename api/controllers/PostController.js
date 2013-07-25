@@ -20,37 +20,54 @@ module.exports = {
       limit = req.param('limit'),
       topic = req.param('topic'),
       user = req.param('user'),
-      search = req.param('search');
+      search = req.param('search'),
+      subscription = req.param('subscription');
 
-    if (search) {
-      def.where({text: {contains: search}});
-    }
+    if (subscription) {
+      SubscriptionTopics.findBySubscription(subscription).done(function(err, subTopics) {
+        var arr = [];
+        subTopics.forEach(function(elem) {
+          arr.push({topic: elem.topic});
+        });
 
-    if (user) {
-      def.where({user: user});
-    }
+        if (arr.length) {
+          def.where({
+            or: arr
+          })
+        }
 
-    if (offset) {
-      def.skip(parseInt(offset));
-    }
+        if (search) {
+          def.where({text: {contains: search}});
+        }
 
-    if (limit) {
-      def.limit(parseInt(limit));
-    } else {
-      def.limit(20);
-    }
+        if (user) {
+          def.where({user: user});
+        }
 
-    def.sort('updatedAt DESC');
+        if (offset) {
+          def.skip(parseInt(offset));
+        }
 
-    if (topic) {
-      def.where({topic: topic});
-    }
+        if (limit) {
+          def.limit(parseInt(limit));
+        } else {
+          def.limit(20);
+        }
 
-    def.exec(function(err, posts) {
-      CommonService.fillPostsWithUserAndTopic(posts, function(posts) {
-        res.json(posts);
+        def.sort('updatedAt DESC');
+
+        if (topic) {
+          def.where({topic: topic});
+        }
+
+        def.exec(function(err, posts) {
+          CommonService.fillPostsWithUserAndTopic(posts, function(posts) {
+            res.json(posts);
+          });
+        });
+
       });
-    });
+    }
   },
 
   find: function(req, res) {
@@ -99,7 +116,7 @@ module.exports = {
         }, 500);
       } else {
         //checking rights to post ion topic
-        if (topic.user === req.user.id) {
+        if (topicObj.user === req.user.id) {
           createPost();
         } else {
           TopicRights.findOne({
