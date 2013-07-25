@@ -163,5 +163,21 @@ module.exports = {
         }
       }
     });
+  },
+
+  destroy: function(req, res) {
+    Post.findOneById(req.param('id')).done(function(err, post) {
+      if (post && (post.user === req.user.id || req.user.level === 1)) {
+        post.destroy(function(err) {
+          res.json({result: 'ok'});
+        });
+      } else {
+        return res.json({
+          code: '500',
+          description: 'No such post or permission denied'
+        }, 500);
+      }
+    });
   }
+
 };
