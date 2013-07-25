@@ -13,7 +13,8 @@ function fillSubscriptionsWithTopics(subscriptions, callback) {
       SubscriptionTopics.findBySubscription(subscription.id).done(function(err, subscriptionTopics) {
         async.map(subscriptionTopics,
           function(subscriptionTopic, returnTopic) {
-            Topic.findById(subscriptionTopic.topic).done(function(err, topic) {
+            Topic.findOneById(subscriptionTopic.topic).done(function(err, topic) {
+              topic.user = {id: topic.user};
               returnTopic(err, topic);
             })
           },
@@ -31,7 +32,8 @@ function fillSubscriptionsWithTopics(subscriptions, callback) {
     SubscriptionTopics.findBySubscription(subscription.id).done(function(err, subscriptionTopics) {
       async.map(subscriptionTopics,
         function(subscriptionTopic, returnTopic) {
-          Topic.findById(subscriptionTopic.topic).done(function(err, topic) {
+          Topic.findOneById(subscriptionTopic.topic).done(function(err, topic) {
+            topic.user = {id: topic.user};
             returnTopic(null, topic);
           })
         },
