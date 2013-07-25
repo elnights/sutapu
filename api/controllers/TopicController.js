@@ -178,6 +178,29 @@ module.exports = {
         }, 500);
       }
     });
+  },
+
+  listuserpermissions: function(req, res) {
+    TopicRights.findByTopic(req.param('id')).done(function(err, topicRights) {
+      async.map(topicRights, function(topicRight, returnFilledTopicRight) {
+        User.findOneById(topicRight.user).done(function(err, user) {
+          returnFilledTopicRight(null, user);
+        });
+      }, function(err, filledTopicRights) {
+        res.json(filledTopicRights)
+      });
+    });
+  },
+
+  removeuserpermission: function(req, res) {
+    TopicRights.destroy({
+      topic: req.param('id'),
+      user: req.param('user')
+    }).done(function(err) {
+      res.json({
+        result: 'ok'
+      });
+    });
   }
 
 };

@@ -39,8 +39,9 @@ module.exports.routes = {
 
   'post /user/updatePassword/:id': 'UserController.updatePassword',
   'post /subscription/addTopic/:id': 'SubscriptionController.addTopic',
-  'post /topic/addUserPermission/:id': 'TopicController.addUserPermission'
-
+  'post /topic/addUserPermission/:id': 'TopicController.addUserPermission',
+  'post /topic/listUserPermissions/:id': 'TopicController.listUserPermissions',
+  'post /topic/removeUserPermission/:id': 'TopicController.removeUserPermission'
   //admin
 //  '/admin': {'view': 'admin/index'},
 //  '/admin/index': {'view': 'admin/index'}

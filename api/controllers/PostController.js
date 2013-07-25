@@ -98,24 +98,45 @@ module.exports = {
           description: 'Topic does not exists'
         }, 500);
       } else {
-        Post.create({
-          user: req.user.id,
-          text: req.param('text'),
-          topic: topic
-        }, function(err) {
-          if (err) {
-            var errMessage;
-            if (errMessage = CommonService.pickValidationMessages(err)) {
-              err = errMessage;
+        //checking rights to post ion topic
+        if (topic.user === req.user.id) {
+          createPost();
+        } else {
+          TopicRights.findOne({
+            id: req.user.id,
+            topic: topic
+          }).done(function(err, granted) {
+            if (granted) {
+              createPost();
+            } else {
+              return res.json({
+                code: '500',
+                description: 'Permission to the topic denied'
+              }, 500);
             }
+          });
+        }
 
-            return res.json({
-              code: '500',
-              description: err
-            }, 500);
-          }
-          res.json({result: 'ok'});
-        });
+        function createPost() {
+          Post.create({
+            user: req.user.id,
+            text: req.param('text'),
+            topic: topic
+          }, function(err) {
+            if (err) {
+              var errMessage;
+              if (errMessage = CommonService.pickValidationMessages(err)) {
+                err = errMessage;
+              }
+
+              return res.json({
+                code: '500',
+                description: err
+              }, 500);
+            }
+            res.json({result: 'ok'});
+          });
+        }
       }
     });
   }
