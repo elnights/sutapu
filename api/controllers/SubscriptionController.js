@@ -80,7 +80,7 @@ module.exports = {
             res.json(fullSubscription);
           });
         } else {
-          res.json({code: 500, description: 'Topic not found'}, 500);
+          res.json({code: 500, description: 'Subscription not found'}, 500);
         }
       }
     });
@@ -103,6 +103,25 @@ module.exports = {
         }, 500);
       }
       res.json({result: 'ok'});
+    });
+  },
+
+  destroy: function(req, res) {
+    Subscription.findOne( {id: req.param('id'), user: req.user.id }, function(err, sub) {
+      if (err) {
+        return res.json({
+          code: '500',
+          description: err
+        }, 500);
+      } else {
+        if (sub) {
+          sub.destroy(function(err) {
+            res.json({result: 'ok'});
+          });
+        } else {
+          res.json({code: 500, description: 'Subscription not found'}, 500);
+        }
+      }
     });
   },
 
