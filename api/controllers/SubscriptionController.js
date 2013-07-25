@@ -102,7 +102,7 @@ module.exports = {
           description: err
         }, 500);
       }
-      res.json({result: 'ok'});
+      res.json(subs);
     });
   },
 
