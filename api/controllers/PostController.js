@@ -34,6 +34,8 @@ module.exports = {
           def.where({
             or: arr
           })
+        } else {
+          return res.json([]);
         }
 
         continueRequest();
