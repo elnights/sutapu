@@ -171,6 +171,18 @@ module.exports = {
         }, 500);
       }
     });
-  }
+  },
 
+  listtopics: function(req, res) {
+    var subId = req.param('id');
+    SubscriptionTopics.findBySubscription(subId).done(function(err, subTopics) {
+      async.map(subTopics, function(subTopic, returnTopic) {
+        Topic.findOneById(subTopic.topic).done(function(err, topic) {
+          returnTopic(null, topic);
+        });
+      }, function(err, topics) {
+        res.json(topics);
+      });
+    });
+  }
 };
