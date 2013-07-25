@@ -14,13 +14,14 @@ module.exports = {
   	nickname: 'string'
   	*/
 
+
     user: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
 
     topic: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
 

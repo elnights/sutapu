@@ -22,7 +22,13 @@ module.exports = {
       user = req.param('user'),
       search = req.param('search');
 
-    def.sort('updatedAt DESC');
+    if (search) {
+      def.where({text: {contains: search}});
+    }
+
+    if (user) {
+      def.where({user: user});
+    }
 
     if (offset) {
       def.skip(parseInt(offset));
@@ -34,13 +40,7 @@ module.exports = {
       def.limit(20);
     }
 
-    if (search) {
-      def.where({text: {contains: search}});
-    }
-
-    if (user) {
-      def.where({user: user});
-    }
+    def.sort('updatedAt DESC');
 
     if (topic) {
       def.where({topic: topic});
@@ -90,24 +90,33 @@ module.exports = {
   },
 
   create: function(req, res) {
-    Post.create({
-      user: req.user.id,
-      text: req.param('text'),
-      topic: req.param('topic')
-    }, function(err, posts) {
-      if (err) {
-        var errMessage;
-        if (errMessage = CommonService.pickValidationMessages(err)) {
-          err = errMessage;
-        }
-
+    var topic = req.param('topic');
+    Topic.findOne({id: topic}, function(err, topicObj) {
+      if (!topicObj) {
         return res.json({
           code: '500',
-          description: err
+          description: 'Topic does not exists'
         }, 500);
+      } else {
+        Post.create({
+          user: req.user.id,
+          text: req.param('text'),
+          topic: topic
+        }, function(err) {
+          if (err) {
+            var errMessage;
+            if (errMessage = CommonService.pickValidationMessages(err)) {
+              err = errMessage;
+            }
+
+            return res.json({
+              code: '500',
+              description: err
+            }, 500);
+          }
+          res.json({result: 'ok'});
+        });
       }
-      res.json({result: 'ok'});
     });
   }
-
 };

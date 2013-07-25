@@ -11,12 +11,12 @@ module.exports = {
   attributes: {
   	
     subscription: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
 
     topic: {
-      type: 'integer',
+      type: 'string',
       required: true
     }
   }

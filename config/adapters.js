@@ -16,13 +16,20 @@ module.exports.adapters = {
 
   // If you leave the adapter config unspecified 
   // in a model definition, 'default' will be used.
-  'default': 'disk',
+  'default': 'mongo',
 
   // In-memory adapter for DEVELOPMENT ONLY
   memory: {
     module: 'sails-memory'
   },
 
+  mongo: {
+    module   : 'sails-mongo',
+    host     : 'localhost',
+    //user     : 'username',
+    //password : 'password',
+    database : 'test'
+  },
   // Persistent adapter for DEVELOPMENT ONLY
   // (data IS preserved when the server shuts down)
   disk: {
