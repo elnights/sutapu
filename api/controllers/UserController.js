@@ -39,6 +39,9 @@ module.exports = {
     if (!displayName) {
       error = 'Empty displayName';
     }
+
+    var level = req.param("level");
+
     var email = req.param("email");
     if (!email) {
       error = 'Empty email';
@@ -70,7 +73,8 @@ module.exports = {
         displayName: displayName,
         password: passwordHash,
         avatar: req.param('avatar'),
-        bio: req.param('bio')
+        bio: req.param('bio'),
+        level: level ? parseInt(level) : 0
       }).done(function(err, user) {
         // Error handling
         var errMessage;
