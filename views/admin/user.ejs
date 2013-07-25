@@ -1,0 +1,119 @@
+<%- partial('partials/nav_top')%>
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="span3">
+        <%- partial('partials/nav_side')%>
+      </div>
+      <div class="span9">
+        <h1>User: <%= item.displayName %></h1>
+        <div class="tabbable">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Profile</a></li>
+            <li><a href="#tab2" data-toggle="tab">Subscriptions (<%= item.subscriptions.length %>)</a></li>
+            <li><a href="#tab3" data-toggle="tab">Topics (<%= item.topics.length %>)</a></li>
+            <li><a href="#tab4" data-toggle="tab">Posts (<%= item.posts.length %>)</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+              <dl class="dl-horizontal">
+                <dt>Id</dt>
+                <dd><%= item.id %></dd>
+                <dt>Name</dt>
+                <dd><%= item.displayName %></dd>
+                <dt>Email</dt>
+                <dd><%= item.email %></dd>
+                <dt>Created</dt>
+                <dd class='for-moment'><%= item.createdAt %></dd>
+                <dt>Updated</dt>
+                <dd class='for-moment'><%= item.updatedAt %></dd>
+                <dt>Role</dt>
+                <dd><%= item.level == 1 ? 'Admin' : 'Visitor' %></dd>
+              </dl>
+            </div>
+            <div class="tab-pane" id="tab2">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Topics</th>
+                    <th>Updated</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% _.each(item.subscriptions, function (subscr) { %>
+                    <tr>
+                      <td><%= subscr.id %></td>
+                      <td><%= subscr.name %></td>
+                      <td>
+                        <% _.each(subscr.topics, function (topic) { %>
+                          <a href='/admin/topic/<%= topic.id %>'><%= topic.name %></a><br>
+                        <% }) %>
+                      </td>
+                      <td class='for-moment'><%= subscr.createdAt %></td>
+                      <td class='for-moment'><%= subscr.updatedAt %></td>
+                      <td><a class='btn-small btn btn-primary' href='/admin/subscription/<%= subscr.id %>'>View</a></td>
+                    </tr>
+                  <% }) %>  
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane" id="tab3">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Updated</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% _.each(item.topics, function (topic) { %>
+                    <tr>
+                      <td><%= topic.id %></td>
+                      <td><%= topic.name %></td>
+                      <td class='for-moment'><%= topic.createdAt %></td>
+                      <td class='for-moment'><%= topic.updatedAt %></td>
+                      <td><a class='btn-small btn btn-primary' href='/admin/topic/<%= topic.id %>'>View</a></td>
+                    </tr>
+                  <% }) %>  
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane" id="tab4">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Text</th>
+                    <th>Topic</th>
+                    <th>Updated</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% _.each(item.posts, function (post) { %>
+                    <tr>
+                      <td><%= post.id %></td>
+                      <td><%= post.text %></td>
+                      <td><a href='/admin/topic/<%= post.topic.id %>'><%= post.topic.name %></a></td>
+                      <td class='for-moment'><%= post.createdAt %></td>
+                      <td class='for-moment'><%= post.updatedAt %></td>
+                      <td><a class='btn-small btn btn-primary' href='/admin/post/<%= post.id %>'>View</a></td>
+                    </tr>
+                  <% }) %>  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

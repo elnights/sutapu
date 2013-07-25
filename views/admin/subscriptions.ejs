@@ -6,7 +6,7 @@
         <%- partial('partials/nav_side')%>
       </div>
       <div class="span9">
-        <h1>Topics</h1>
+        <h1>Subscriptions</h1>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -18,13 +18,14 @@
             </tr>
           </thead>
           <tbody>
-            <% _.each(items, function (topic) { %>
+            <% _.each(items, function (subscr) { %>
+
               <tr>
-                <td><%= topic.name %></td>
-                <td><a href='/admin/user/<%= topic.user.id %>'><%= topic.user.displayName %></a></td>
-                <td class='for-moment'><%= topic.createdAt %></td>
-                <td class='for-moment'><%= topic.updatedAt %></td>
-                <td><a class='btn-small btn btn-primary' href='/admin/topic/<%= topic.id %>'>View</a></td>
+                <td><%= subscr.name %></td>
+                <td><a href='/admin/user/<%= subscr.user.id %>'><%= subscr.user.displayName %></a></td>
+                <td class='for-moment'><%= subscr.createdAt %></td>
+                <td class='for-moment'><%= subscr.updatedAt %></td>
+                <td><a class='btn-small btn btn-primary' href='/admin/subscription/<%= subscr.id %>'>View</a></td>
               </tr>
             <% }) %>  
           </tbody>
@@ -32,20 +33,20 @@
         <%- partial('partials/pagination')%>
 
         <!-- Button to trigger modal -->
-        <button href="#newTopic" data-toggle="modal" class='btn-small pull-right btn btn-primary'>New Topic</button>
+        <button href="#newSubscription" data-toggle="modal" class='btn-small pull-right btn btn-primary'>New Subscription</button>
 
         <!-- Modal -->
-        <div id="newTopic" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="newSubscription" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Create new Topic</h3>
+            <h3 id="myModalLabel">Create new Subscription</h3>
           </div>
           <div class="modal-body">
             <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="name">Name</label>
                 <div class="controls">
-                  <input type="text" id="name" name='name' placeholder="Name of Topic">
+                  <input type="text" id="name" name='name' placeholder="Name of Subscription">
                 </div>
               </div>
             </form>

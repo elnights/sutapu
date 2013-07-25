@@ -1,16 +1,15 @@
-<%- partial('nav_top')%>
+<%- partial('partials/nav_top')%>
 <div class="wrapper">
   <div class="container">
     <div class="row">
       <div class="span3">
-        <%- partial('nav_side')%>
+        <%- partial('partials/nav_side')%>
       </div>
       <div class="span9">
         <h1>Users</h1>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Avatar</th>
               <th>Name</th>
               <th>Email</th>
@@ -22,25 +21,69 @@
           <tbody>
             <% _.each(items, function (user) { %>
               <tr>
-                <td><%= user.id %></td>
                 <th><img src="/admin/img/user_48.png" class="lodo-for-users img-rounded"></th>
                 <td><%= user.displayName %></td>
                 <td><%= user.email %></td>
                 <td class='for-moment'><%= user.createdAt %></td>
                 <td class='for-moment'><%= user.updatedAt %></td>
                 <td>
+                  <a class='btn-small btn btn-primary' href='/admin/user/<%= user.id %>'>View</a>
                   <% if (user.level == 1) { %>
-                    <button data-id='<%= user.id %>' class='btn-small btn btn-success'>Make Admin</button>
+                    <button data-id='<%= user.id %>' class='btn-small btn btn-danger'>Un Admin</button>
                   <% } else { %>
-                    <button data-id='<%= user.id %>' class='btn-small btn btn-danger'>Get Fired</button>
+                    <button data-id='<%= user.id %>' class='btn-small btn btn-success'>Adminize</button>
                   <% } %>
                 </td>
               </tr>
             <% }) %>  
           </tbody>
         </table>
-        <%- partial('pagination')%>
-        <button class='btn-small pull-right btn btn-primary'>New User</button>
+        <%- partial('partials/pagination')%>
+        
+        <!-- Button to trigger modal -->
+        <button href="#newUser" data-toggle="modal" class='btn-small pull-right btn btn-primary'>New User</button>
+
+        <!-- Modal -->
+        <div id="newUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Create new User</h3>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="displayName">Name</label>
+                <div class="controls">
+                  <input type="text" id="displayName" name='displayName' placeholder="Name">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                  <input type="text" id="email" name='email' placeholder="Email">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                  <input type="password" id="password" name='password' placeholder="Password">
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <label class="checkbox">
+                    <input value='1' name='level' type="checkbox"> Should be Admin
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary submit">Create</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

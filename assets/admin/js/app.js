@@ -62,7 +62,7 @@ window.sutatu.moment = {
     var _ = this;
 
     $.each(_.elems.timesForMoment, function(i, el){
-      var time = moment($(el).text(), "YYYYMMDDHHmm Z").fromNow();
+      var time = moment($(el).text()).fromNow();
       $(el).text(time);
     });
   },
@@ -76,7 +76,67 @@ window.sutatu.moment = {
   }
 };
 
+window.sutatu.crud = {
+  formsSubmit: function(url, data){
+    var _ = this;
+
+    $.ajax({
+      type: 'POST',
+      url: url,
+      dataType: 'JSON',
+      data: data
+    }).done(function(res) {
+      if(res.id || res.result){
+        window.location.reload();
+      } else {
+        _.root.alert('warning', 'Oops...');
+      }
+    }).fail(function(res) {
+      _.root.alert('error', res.responseJSON.code +' '+ res.responseJSON.description);
+    });
+  },
+
+  initHandlers: function() {
+    var _ = this;
+
+    _.elems.newUserSubmit.click(function() {
+      _.formsSubmit('/user/create', _.elems.newUserForm.serializeArray())
+    });
+
+     _.elems.newTopicSubmit.click(function() {
+      _.formsSubmit('/topic/create', _.elems.newTopicForm.serializeArray())
+    });
+
+    _.elems.newPostSubmit.click(function() {
+      _.formsSubmit('/post/create', _.elems.newPostForm.serializeArray())
+    });
+
+    _.elems.newSubscriptionSubmit.click(function() {
+      _.formsSubmit('/subscription/create', _.elems.newSubscriptionForm.serializeArray())
+    });
+  },
+  init: function(){
+    this.root = window.sutatu;
+    this.elems = {
+      newUserForm: $('#newUser form'),
+      newUserSubmit: $('#newUser .submit'),
+
+      newTopicForm: $('#newTopic form'),
+      newTopicSubmit: $('#newTopic .submit'),
+
+      newPostForm: $('#newPost form'),
+      newPostSubmit: $('#newPost .submit'),
+
+      newSubscriptionForm: $('#newSubscription form'),
+      newSubscriptionSubmit: $('#newSubscription .submit')
+    };
+
+    this.initHandlers();
+  }
+};
+
 $(function(){
   window.sutatu.auth.init();
   window.sutatu.moment.init();
+  window.sutatu.crud.init();
 });

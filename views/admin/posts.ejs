@@ -1,38 +1,73 @@
-<%- partial('nav_top')%>
+<%- partial('partials/nav_top')%>
 <div class="wrapper">
   <div class="container">
     <div class="row">
       <div class="span3">
-        <%- partial('nav_side')%>
+        <%- partial('partials/nav_side')%>
       </div>
       <div class="span9">
         <h1>Posts</h1>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Text</th>
               <th>Topic</th>
               <th>User</th>
               <th>Updated</th>
               <th>Created</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <% _.each(items, function (post) { %>
               <tr>
-                <td><%= post.id %></td>
                 <td><%= post.text %></td>
                 <td><a href='/admin/topic/<%= post.topic.id %>'><%= post.topic.name %></a></td>
                 <td><a href='/admin/user/<%= post.user.id %>'><%= post.user.displayName %></a></td>
                 <td class='for-moment'><%= post.createdAt %></td>
                 <td class='for-moment'><%= post.updatedAt %></td>
+                <td><a class='btn-small btn btn-primary' href='/admin/post/<%= post.id %>'>View</a></td>
               </tr>
             <% }) %>  
           </tbody>
         </table>
-        <%- partial('pagination')%>
-        <button class='btn-small pull-right btn btn-primary'>New Post</button>
+        <%- partial('partials/pagination')%>
+
+        <!-- Button to trigger modal -->
+        <button href="#newPost" data-toggle="modal" class='btn-small pull-right btn btn-primary'>New Post</button>
+
+        <!-- Modal -->
+        <div id="newPost" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Create new Post</h3>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="topic">Topic</label>
+                <div class="controls">
+                  <select id='topic' name='topic'>
+                    <option value="" disabled selected>Select Topic</option>
+                    <% _.each(topics, function (topic) { %>
+                      <option value='<%= topic.id %>'><%= topic.name %></option>
+                    <% }) %>  
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="text">Text</label>
+                <div class="controls">
+                  <textarea id="text" name='text' placeholder="Body of Post"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary submit">Create</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
