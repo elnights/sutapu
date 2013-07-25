@@ -122,6 +122,60 @@ module.exports = {
       }
       res.json({result: 'ok'});
     });
+  },
+
+  adduserpermission: function(req, res) {
+    var user = req.param('user');
+    if (user === req.user.id) {
+      return res.json({
+        code: '500',
+        description: "Can't give permission to user himself"
+      }, 500);
+    }
+    if (!user) {
+      return res.json({
+        code: '500',
+        description: 'No user given'
+      }, 500);
+    }
+    Topic.findOne({
+      user: req.user.id,
+      id: req.param('id')
+    }, function(err, topic) {
+      if (topic) {
+        TopicRights.findOne({subscription: topic.id, topic: user}).done(function(err, subscriptionTopic) {
+          if (subscriptionTopic) {
+            return res.json({
+              code: '500',
+              description: 'Permission already given'
+            }, 500);
+          } else {
+            User.findOneById(user).done(function(err, userObject) {
+              if (!userObject) {
+                return res.json({
+                  code: '500',
+                  description: 'User does not exists'
+                }, 500);
+              } else {
+                TopicRights.create({
+                  topic: topic.id,
+                  user: user
+                }).done(function(err, userRight) {
+                  res.json({
+                    result: 'ok'
+                  });
+                });
+              }
+            });
+          }
+        });
+      } else {
+        return res.json({
+          code: '500',
+          description: 'Topic not found'
+        }, 500);
+      }
+    });
   }
 
 };
