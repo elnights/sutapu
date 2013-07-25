@@ -1,0 +1,39 @@
+<%- partial('nav_top')%>
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="span3">
+        <%- partial('nav_side')%>
+      </div>
+      <div class="span9">
+        <h1>Posts</h1>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Text</th>
+              <th>Topic</th>
+              <th>User</th>
+              <th>Updated</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% _.each(items, function (post) { %>
+              <tr>
+                <td><%= post.id %></td>
+                <td><%= post.text %></td>
+                <td><a href='/admin/topic/<%= post.topic.id %>'><%= post.topic.name %></a></td>
+                <td><a href='/admin/user/<%= post.user.id %>'><%= post.user.displayName %></a></td>
+                <td class='for-moment'><%= post.createdAt %></td>
+                <td class='for-moment'><%= post.updatedAt %></td>
+              </tr>
+            <% }) %>  
+          </tbody>
+        </table>
+        <%- partial('pagination')%>
+        <button class='btn-small pull-right btn btn-primary'>New Post</button>
+      </div>
+    </div>
+  </div>
+</div>

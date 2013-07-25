@@ -1,0 +1,41 @@
+<% if (pagin.total > 1) { %>
+  <div class="pull-left pagination">
+    <ul>
+      <% if (pagin.total <= pagin.max) { %>
+
+        <% for (var i=1; i<=pagin.total; i++) { %>
+          <li class="<%= pagin.current == i ? 'active' : '' %>"><a href="?page=<%= i %>"><%= i %></a></li>
+        <% } %>
+
+      <% } else { %>
+        <% if (pagin.current <= pagin.max/2+1) { %>
+
+          <% for (var i=1; i<=pagin.max; i++) { %>
+            <li class="<%= pagin.current == i ? 'active' : '' %>"><a href="?page=<%= i %>"><%= i %></a></li>
+          <% } %>
+
+          <li class="disabled"><a href="#">...</a></li>
+
+        <% } else if (pagin.current >= pagin.total-(pagin.max/2)) { %>
+          
+          <li class="disabled"><a href="#">...</a></li>
+
+          <% for (var i=pagin.total-pagin.max; i<=pagin.total; i++) { %>
+            <li class="<%= pagin.current == i ? 'active' : '' %>"><a href="?page=<%= i %>"><%= i %></a></li>
+          <% } %>
+
+        <% } else { %>
+
+          <li class="disabled"><a href="#">...</a></li>
+
+           <% for (var i=pagin.current-(pagin.max/2); i<=pagin.current+(pagin.max/2); i++) { %>
+            <li class="<%= pagin.current == i ? 'active' : '' %>"><a href="?page=<%= i %>"><%= i %></a></li>
+          <% } %>
+
+          <li class="disabled"><a href="#">...</a></li>
+
+        <% } %>
+      <% } %>
+    </ul>
+  </div>
+<% } %>

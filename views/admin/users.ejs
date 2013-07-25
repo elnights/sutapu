@@ -1,0 +1,47 @@
+<%- partial('nav_top')%>
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="span3">
+        <%- partial('nav_side')%>
+      </div>
+      <div class="span9">
+        <h1>Users</h1>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Avatar</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Updated</th>
+              <th>Created</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% _.each(items, function (user) { %>
+              <tr>
+                <td><%= user.id %></td>
+                <th><img src="/admin/img/user_48.png" class="lodo-for-users img-rounded"></th>
+                <td><%= user.displayName %></td>
+                <td><%= user.email %></td>
+                <td class='for-moment'><%= user.createdAt %></td>
+                <td class='for-moment'><%= user.updatedAt %></td>
+                <td>
+                  <% if (user.level == 1) { %>
+                    <button data-id='<%= user.id %>' class='btn-small btn btn-success'>Make Admin</button>
+                  <% } else { %>
+                    <button data-id='<%= user.id %>' class='btn-small btn btn-danger'>Get Fired</button>
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>  
+          </tbody>
+        </table>
+        <%- partial('pagination')%>
+        <button class='btn-small pull-right btn btn-primary'>New User</button>
+      </div>
+    </div>
+  </div>
+</div>
